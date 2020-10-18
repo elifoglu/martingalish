@@ -1,16 +1,17 @@
 package com.philocoder.martingalish
 
-import com.philocoder.martingalish.EarningType.BackToBankroll
-import com.philocoder.martingalish.EarningType.Earning
+import com.philocoder.martingalish.DesiredBetResult.*
 
-data class Strategy(val sequence: List<EarningType>) {
+data class Strategy(val sequence: List<DesiredBetResult>) {
 
     companion object {
         fun from(input: String) =
                 Strategy(sequence = input.toCharArray().map {
                     when (it) {
-                        'g' -> Earning
-                        else -> BackToBankroll
+                        'g' -> GainMoney
+                        'l' -> LoseMoney
+                        'b' -> BackToBankroll
+                        else -> throw RuntimeException()
                     }
                 })
     }
