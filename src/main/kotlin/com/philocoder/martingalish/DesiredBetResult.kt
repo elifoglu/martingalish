@@ -21,4 +21,14 @@ sealed class DesiredBetResult(val representation: Char, val stakeCalculatorFn: (
     object BackToBankroll : DesiredBetResult(
             representation = 'b',
             stakeCalculatorFn = { totalSpentUntilNow, fixedEarning, _ -> totalSpentUntilNow / fixedEarning })
+
+    companion object {
+        fun fromRepresentation(char: Char): DesiredBetResult =
+                when (char) {
+                    GainMoney.representation -> GainMoney
+                    LoseMoney.representation -> LoseMoney
+                    BackToBankroll.representation -> BackToBankroll
+                    else -> throw RuntimeException()
+                }
+    }
 }
