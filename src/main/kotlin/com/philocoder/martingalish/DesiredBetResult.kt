@@ -4,18 +4,21 @@ import arrow.core.Option
 import arrow.core.getOrElse
 import java.lang.RuntimeException
 
-sealed class DesiredBetResult(val stakeCalculatorFn: (Double, Double, Option<Double>) -> Double) {
+sealed class DesiredBetResult(val representation: Char, val stakeCalculatorFn: (Double, Double, Option<Double>) -> Double) {
 
     object GainMoney : DesiredBetResult(
-            { totalSpentUntilNow, fixedEarning, _ -> (totalSpentUntilNow + fixedEarning) / fixedEarning })
+            representation = 'g',
+            stakeCalculatorFn = { totalSpentUntilNow, fixedEarning, _ -> (totalSpentUntilNow + fixedEarning) / fixedEarning })
 
     object LoseMoney : DesiredBetResult(
-            { totalSpentUntilNow, fixedEarning, bankrollReduceRatioOpt ->
+            representation = 'l',
+            stakeCalculatorFn = { totalSpentUntilNow, fixedEarning, bankrollReduceRatioOpt ->
                 val odd = fixedEarning + 1
                 val bankrollReduceRatio = bankrollReduceRatioOpt.getOrElse { throw RuntimeException() }
                 totalSpentUntilNow / (bankrollReduceRatio * odd - 1)
             })
 
     object BackToBankroll : DesiredBetResult(
-            { totalSpentUntilNow, fixedEarning, _ -> totalSpentUntilNow / fixedEarning })
+            representation = 'b',
+            stakeCalculatorFn = { totalSpentUntilNow, fixedEarning, _ -> totalSpentUntilNow / fixedEarning })
 }
