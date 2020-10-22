@@ -2,6 +2,7 @@ package com.philocoder.martingalish
 
 import arrow.core.None
 import arrow.core.Some
+import arrow.core.getOrElse
 import com.philocoder.martingalish.DesiredBetResult.LoseMoney
 import com.philocoder.martingalish.StrategyInputValidator.isValid
 
@@ -21,19 +22,8 @@ fun main() {
             Some(readLine()!!.toDouble())
         } else None
 
-        val firstStake = 1.0
-        val stakeList = arrayListOf(firstStake)
-        val fixedEarning = odd - firstStake
-        var totalSpentUntilNow = firstStake
-        for (desiredBetResult in strategy.sequence.drop(n = 1)) {
-            val currentStake = desiredBetResult.stakeCalculatorFn(totalSpentUntilNow, fixedEarning, bankrollReduceRatio)
-            stakeList.add(currentStake)
-            totalSpentUntilNow += currentStake
-        }
-
-        println(stakeList)
-        println("Bankroll: $totalSpentUntilNow")
-        println("Earning as percentage: %${(fixedEarning / stakeList.sum())}")
+        println("Key: $odd$strategyInput${bankrollReduceRatio.map { it.toString() }.getOrElse { "" }}")
+        StrategyOutput.calculate(strategy, odd, bankrollReduceRatio).printInfo()
 
         print("Press enter to restart, or write anything to quit...")
     } while (readLine()!!.isEmpty())
