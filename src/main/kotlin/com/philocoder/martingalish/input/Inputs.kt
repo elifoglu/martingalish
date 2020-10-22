@@ -1,10 +1,10 @@
-package com.philocoder.martingalish
+package com.philocoder.martingalish.input
 
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.Some
-import com.philocoder.martingalish.input.Strategy
-import com.philocoder.martingalish.input.StrategyInputValidator
+import com.philocoder.martingalish.DesiredBetResult
+import com.philocoder.martingalish.Strategy
 
 data class Inputs(val strategyInput: String,
                   val odd: Double,

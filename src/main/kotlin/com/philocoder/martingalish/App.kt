@@ -1,7 +1,7 @@
 package com.philocoder.martingalish
 
 import arrow.core.getOrElse
-import com.philocoder.martingalish.input.Strategy
+import com.philocoder.martingalish.input.Inputs
 
 fun main() {
     do {
