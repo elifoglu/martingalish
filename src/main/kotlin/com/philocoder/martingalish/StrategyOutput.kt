@@ -1,6 +1,7 @@
 package com.philocoder.martingalish
 
 import arrow.core.Option
+import com.philocoder.martingalish.input.Strategy
 
 data class StrategyOutput(val stakeList: List<Double>,
                           val bankroll: Double,

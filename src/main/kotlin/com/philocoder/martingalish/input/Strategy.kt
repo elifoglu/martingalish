@@ -1,4 +1,6 @@
-package com.philocoder.martingalish
+package com.philocoder.martingalish.input
+
+import com.philocoder.martingalish.DesiredBetResult
 
 data class Strategy(val sequence: List<DesiredBetResult>) {
 
