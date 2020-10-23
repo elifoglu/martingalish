@@ -4,7 +4,11 @@ import com.philocoder.martingalish.DesiredBetResult.*
 
 object StrategyInputValidator {
 
-    private val allValidChars = arrayOf(GainMoney, LoseMoney, BackToBankroll).map { it.representation }
+    private val allValidChars = arrayOf(
+            GainMoney.representation,
+            LoseMoney.representation,
+            BackToBankroll.representation
+    )
 
     fun isValid(input: String): Boolean {
         if (input.toCharArray().any { !allValidChars.contains(it) }) {

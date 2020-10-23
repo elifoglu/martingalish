@@ -5,10 +5,10 @@ import arrow.core.Option
 import arrow.core.Some
 import com.philocoder.martingalish.DesiredBetResult
 import com.philocoder.martingalish.DesiredBetResult.GainMoney
-import com.philocoder.martingalish.Strategy
 
-data class Inputs(val strategy: Strategy,
+data class Inputs(val strategyInput: String,
                   val odd: Double,
+                  val gainRatios: List<Double>,
                   val bankrollReduceRatio: Option<Double>) {
 
     companion object {
@@ -23,26 +23,27 @@ data class Inputs(val strategy: Strategy,
             print("Enter odd: ")
             val odd = readLine()!!.toDouble()
 
-            val strategy = Strategy.from(strategyInput)
-
-            val gainRatios = arrayListOf(odd - 1)
-            val gainMoneyDesiredBetResults = strategy.sequence.filter { it is GainMoney }
-            if (gainMoneyDesiredBetResults.size > 1) {
+            val gainRatios = arrayListOf<Double>()
+            val gainMoneyRepresentations = strategyInput.toCharArray().filter { it == GainMoney.representation }
+            if (gainMoneyRepresentations.size > 1) {
                 println("Enter gain ratio for each '${GainMoney.representation}'...")
-                gainMoneyDesiredBetResults
-                        .drop(1)
-                        .forEachIndexed { i, it ->
+                gainMoneyRepresentations.drop(1)
+                        .forEachIndexed { i, _ ->
                             print("Enter for ${i + 2}. '${GainMoney.representation}': ")
                             gainRatios.add(readLine()!!.toDouble())
                         }
             }
 
-            val bankrollReduceRatio = if (strategy.containsDesiredBetResult(DesiredBetResult.LoseMoney)) {
+            val bankrollReduceRatio = if (strategyInput.contains(DesiredBetResult.LoseMoney.representation)) {
                 print("Enter bankroll reduce ratio: ")
                 Some(readLine()!!.toDouble())
             } else None
 
-            return Inputs(strategy, odd, bankrollReduceRatio)
+            return Inputs(
+                    strategyInput = strategyInput,
+                    odd = odd,
+                    gainRatios = gainRatios,
+                    bankrollReduceRatio = bankrollReduceRatio)
         }
     }
 }

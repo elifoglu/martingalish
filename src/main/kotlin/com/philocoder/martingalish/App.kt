@@ -6,8 +6,9 @@ import com.philocoder.martingalish.input.Inputs
 fun main() {
     do {
         val inputs: Inputs = Inputs.receive();
-        println("Martingalish key: ${inputs.odd}${inputs.strategy}${inputs.bankrollReduceRatio.map { it.toString() }.getOrElse { "" }}")
-        StrategyOutput.calculate(inputs).printInfo()
+        val strategy = Strategy.build(inputs)
+        println("Martingalish key: ${inputs.odd}${inputs.strategyInput}${inputs.bankrollReduceRatio.map { it.toString() }.getOrElse { "" }}")
+        BetList.from(strategy).printInfo()
         print("Press enter to restart, or write anything to quit...")
     } while (readLine()!!.isEmpty())
 }
