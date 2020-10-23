@@ -4,9 +4,10 @@ import arrow.core.None
 import arrow.core.Option
 import arrow.core.Some
 import com.philocoder.martingalish.DesiredBetResult
+import com.philocoder.martingalish.DesiredBetResult.GainMoney
 import com.philocoder.martingalish.Strategy
 
-data class Inputs(val strategyInput: String,
+data class Inputs(val strategy: Strategy,
                   val odd: Double,
                   val bankrollReduceRatio: Option<Double>) {
 
@@ -22,12 +23,26 @@ data class Inputs(val strategyInput: String,
             print("Enter odd: ")
             val odd = readLine()!!.toDouble()
 
-            val bankrollReduceRatio = if (Strategy.from(strategyInput).containsDesiredBetResult(DesiredBetResult.LoseMoney)) {
+            val strategy = Strategy.from(strategyInput)
+
+            val gainRatios = arrayListOf(odd - 1)
+            val gainMoneyDesiredBetResults = strategy.sequence.filter { it is GainMoney }
+            if (gainMoneyDesiredBetResults.size > 1) {
+                println("Enter gain ratio for each '${GainMoney.representation}'...")
+                gainMoneyDesiredBetResults
+                        .drop(1)
+                        .forEachIndexed { i, it ->
+                            print("Enter for ${i + 2}. '${GainMoney.representation}': ")
+                            gainRatios.add(readLine()!!.toDouble())
+                        }
+            }
+
+            val bankrollReduceRatio = if (strategy.containsDesiredBetResult(DesiredBetResult.LoseMoney)) {
                 print("Enter bankroll reduce ratio: ")
                 Some(readLine()!!.toDouble())
             } else None
 
-            return Inputs(strategyInput, odd, bankrollReduceRatio)
+            return Inputs(strategy, odd, bankrollReduceRatio)
         }
     }
 }

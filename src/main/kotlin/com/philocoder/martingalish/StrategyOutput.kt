@@ -1,6 +1,6 @@
 package com.philocoder.martingalish
 
-import arrow.core.Option
+import com.philocoder.martingalish.input.Inputs
 
 data class StrategyOutput(val stakeList: List<Double>,
                           val bankroll: Double,
@@ -13,12 +13,12 @@ data class StrategyOutput(val stakeList: List<Double>,
             |""".trimMargin())
 
     companion object {
-        fun calculate(strategy: Strategy, odd: Double, bankrollReduceRatio: Option<Double>): StrategyOutput {
+        fun calculate(inputs: Inputs): StrategyOutput {
             val firstStake = 1.0
             val stakeList = arrayListOf(firstStake)
-            val fixedEarning = odd - firstStake
-            for (desiredBetResult in strategy.sequence.drop(n = 1)) {
-                val currentStake = desiredBetResult.stakeCalculatorFn(stakeList.sum(), fixedEarning, bankrollReduceRatio)
+            val fixedEarning = inputs.odd - firstStake
+            for (desiredBetResult in inputs.strategy.sequence.drop(n = 1)) {
+                val currentStake = desiredBetResult.stakeCalculatorFn(stakeList.sum(), fixedEarning, inputs.bankrollReduceRatio)
                 stakeList.add(currentStake)
             }
             return StrategyOutput(
