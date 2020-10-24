@@ -47,4 +47,17 @@ class MartingalishStrategyTest {
         //then
         betList isLike ExpectedBetList(bankroll = 6.125, stakeList = arrayListOf(1.0, 1.5, 2.25, 1.375))
     }
+
+    @Test
+    fun `3,0-g1,0g1,0lg1,0l-1,0`() {
+        //given
+        val inputs = Inputs("gglgl", 3.0, arrayListOf(1.0, 1.0), Some(1.0), None)
+
+        //when
+        val strategy = MartingalishStrategy.from(inputs)
+        val betList = BetList.of(strategy).printInfo(inputs.actualBankroll)
+
+        //then
+        betList isLike ExpectedBetList(bankroll = 6.688, stakeList = arrayListOf(1.0, 1.5, 0.25, 2.375, 1.562))
+    }
 }
