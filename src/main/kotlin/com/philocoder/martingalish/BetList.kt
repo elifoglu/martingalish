@@ -3,10 +3,11 @@ package com.philocoder.martingalish
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.getOrElse
+import com.philocoder.martingalish.input.Inputs
 
 data class BetList(val list: List<Bet>) {
 
-    private val bankroll = list.map { it.stake }.sum()
+    val bankroll = list.map { it.stake }.sum()
 
     fun printInfo(actualBankroll: Option<Double>) {
         printStakeListWithBankroll()
@@ -24,7 +25,8 @@ data class BetList(val list: List<Bet>) {
             list.forEach { println("Ratio for '${it.desiredResult.representation}': ${it.calculateEarningRatio(bankroll)}") }
 
     companion object {
-        fun from(strategy: Strategy): BetList {
+        fun from(inputs: Inputs): BetList {
+            val strategy = Strategy.build(inputs)
             val betList = arrayListOf<Bet>()
             for (desiredBetResult in strategy.sequence) {
                 val stake = desiredBetResult.stakeCalculatorFn(betList.map { it.stake }.sum(), strategy.odd)

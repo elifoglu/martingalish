@@ -12,6 +12,8 @@
         <java.version>1.8</java.version>
         <kotlin.version>1.3.72</kotlin.version>
         <arrow.version>0.10.5</arrow.version>
+        <jupiter.version>5.5.2</jupiter.version>
+        <assertj.version>3.13.2</assertj.version>
     </properties>
 
     <dependencies>
@@ -24,6 +26,16 @@
             <groupId>io.arrow-kt</groupId>
             <artifactId>arrow-core</artifactId>
             <version>${arrow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${jupiter.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+            <version>${assertj.version}</version>
         </dependency>
     </dependencies>
 </project>
