@@ -21,7 +21,6 @@ data class Inputs(val strategyInput: String,
             } while (!InputValidator.isValidStrategyInput(strategyInput))
 
             var odd: Double
-
             do {
                 print("Enter odd: ")
                 odd = readLine()!!.toDouble()
