@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test
 class StrategyTest {
 
     @Test
-    fun `3,0g1,0g1,0g1,0g`() {
+    fun `3,0-g1,0g1,0g1,0g`() {
         //given
         val inputs = Inputs("gggg", 3.0, arrayListOf(1.0, 1.0, 1.0), None, None)
 
@@ -22,7 +22,7 @@ class StrategyTest {
     }
 
     @Test
-    fun `3,0g1,0g1,0g1,0b`() {
+    fun `3,0-g1,0g1,0g1,0b`() {
         //given
         val inputs = Inputs("gggb", 3.0, arrayListOf(1.0, 1.0), None, None)
 
@@ -34,7 +34,7 @@ class StrategyTest {
     }
 
     @Test
-    fun `3,0g1,0g1,0g1,0l`() {
+    fun `3,0-g1,0g1,0g1,0l-1,0`() {
         //given
         val inputs = Inputs("gggl", 3.0, arrayListOf(1.0, 1.0), Some(1.0), None)
 
