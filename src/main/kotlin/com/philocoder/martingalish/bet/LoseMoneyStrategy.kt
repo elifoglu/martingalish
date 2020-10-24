@@ -3,12 +3,12 @@ package com.philocoder.martingalish.bet
 import com.philocoder.martingalish.bet.DesiredBetResult.LoseMoney
 
 
-data class LoseMoneyStrategy(val bankrollReduceRatio: Double) : BetStrategy {
+data class LoseMoneyStrategy(val loss: Double, val lossRatio: Double) : BetStrategy {
 
     override val representation: Char
         get() = LoseMoney.representation
 
     override val stakeCalculatorFn = { totalSpentUntilNow: Double, odd: Double ->
-        totalSpentUntilNow / (odd / bankrollReduceRatio - 1)
+        (totalSpentUntilNow - loss) / (odd - 1)
     }
 }

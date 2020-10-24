@@ -16,7 +16,6 @@ class StrategyTest {
 
         //when
         val betList = BetList.from(inputs).printInfo(inputs.actualBankroll)
-        //val betList = BetList.from(inputs)
 
         //then
         betList isLike ExpectedBetList(bankroll = 8.125, stakeList = arrayListOf(1.0, 1.5, 2.25, 3.375))
@@ -29,7 +28,6 @@ class StrategyTest {
 
         //when
         val betList = BetList.from(inputs).printInfo(inputs.actualBankroll)
-        //val betList = BetList.from(inputs)
 
         //then
         betList isLike ExpectedBetList(bankroll = 7.125, stakeList = arrayListOf(1.0, 1.5, 2.25, 2.375))
@@ -38,13 +36,12 @@ class StrategyTest {
     @Test
     fun `3,0g1,0g1,0g1,0l`() {
         //given
-        val inputs = Inputs("gggl", 3.0, arrayListOf(1.0, 1.0), Some(0.5), None)
+        val inputs = Inputs("gggl", 3.0, arrayListOf(1.0, 1.0), Some(1.0), None)
 
         //when
         val betList = BetList.from(inputs).printInfo(inputs.actualBankroll)
-        //val betList = BetList.from(inputs)
 
         //then
-        betList isLike ExpectedBetList(bankroll = 5.7, stakeList = arrayListOf(1.0, 1.5, 2.25, 0.95))
+        betList isLike ExpectedBetList(bankroll = 6.125, stakeList = arrayListOf(1.0, 1.5, 2.25, 1.375))
     }
 }

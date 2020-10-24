@@ -9,7 +9,7 @@ import com.philocoder.martingalish.bet.DesiredBetResult.GainMoney
 data class Inputs(val strategyInput: String,
                   val odd: Double,
                   val gainRatios: List<Double>,
-                  val bankrollReduceRatio: Option<Double>,
+                  val lossRatio: Option<Double>,
                   val actualBankroll: Option<Double>) {
 
     companion object {
@@ -38,8 +38,8 @@ data class Inputs(val strategyInput: String,
                         }
             }
 
-            val bankrollReduceRatio = if (strategyInput.contains(DesiredBetResult.LoseMoney.representation)) {
-                print("Enter bankroll reduce ratio: ")
+            val lossRatio = if (strategyInput.contains(DesiredBetResult.LoseMoney.representation)) {
+                print("Enter loss ratio: ")
                 Some(readLine()!!.toDouble())
             } else None
 
@@ -52,7 +52,7 @@ data class Inputs(val strategyInput: String,
                     strategyInput = strategyInput,
                     odd = odd,
                     gainRatios = gainRatios,
-                    bankrollReduceRatio = bankrollReduceRatio,
+                    lossRatio = lossRatio,
                     actualBankroll = actualBankroll)
         }
     }

@@ -37,7 +37,7 @@ data class BetList(val list: List<Bet>) {
             }
         }
         if (list.any { it.betStrategy is LoseMoneyStrategy }) {
-            print("-${(list.first { it.betStrategy is LoseMoneyStrategy }.betStrategy as LoseMoneyStrategy).bankrollReduceRatio}")
+            print("-${(list.first { it.betStrategy is LoseMoneyStrategy }.betStrategy as LoseMoneyStrategy).lossRatio}")
         }
         println()
     }

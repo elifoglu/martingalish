@@ -18,6 +18,7 @@ data class Strategy(val sequence: List<BetStrategy>, val odd: Double) {
             var i = 0
             val earningOfFirstStake = inputs.odd - 1
             val earnings = listOf(earningOfFirstStake) + inputs.gainRatios.map { earningOfFirstStake * it }
+            val loss = inputs.lossRatio.map { it * earningOfFirstStake }
             return Strategy(
                     sequence = inputs.strategyInput.toCharArray().map {
                         when (DesiredBetResult.fromRepresentation(it)) {
@@ -29,7 +30,9 @@ data class Strategy(val sequence: List<BetStrategy>, val odd: Double) {
                                 i++
                                 gainMoney
                             }
-                            LoseMoney -> LoseMoneyStrategy(inputs.bankrollReduceRatio.getOrElse { throw RuntimeException() })
+                            LoseMoney -> LoseMoneyStrategy(
+                                    loss.getOrElse { throw RuntimeException() },
+                                    inputs.lossRatio.getOrElse { throw RuntimeException() })
                             BackToBankroll -> BackToBankroll
                         }
                     },
