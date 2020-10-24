@@ -18,11 +18,14 @@ data class Inputs(val strategyInput: String,
             do {
                 print("Enter your martingalish strategy (e.g: gggb or ggbl): ")
                 strategyInput = readLine()!!
-                val validInput = StrategyInputValidator.isValid(strategyInput)
-            } while (!validInput)
+            } while (!InputValidator.isValidStrategyInput(strategyInput))
 
-            print("Enter odd: ")
-            val odd = readLine()!!.toDouble()
+            var odd: Double
+
+            do {
+                print("Enter odd: ")
+                odd = readLine()!!.toDouble()
+            } while (!InputValidator.isValidOdd(odd))
 
             val gainRatios = arrayListOf<Double>()
             val gainMoneyRepresentations = strategyInput.toCharArray().filter { it == GainMoney.representation }
