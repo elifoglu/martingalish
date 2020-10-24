@@ -14,7 +14,7 @@ data class BetList(val list: List<Bet>) {
 
     val bankroll = list.map { it.stake }.sum()
 
-    fun printInfo(actualBankroll: Option<Double>) {
+    fun printInfo(actualBankroll: Option<Double>): BetList {
         printMartingalishKey()
         printStakeListWithBankroll()
         println()
@@ -23,6 +23,7 @@ data class BetList(val list: List<Bet>) {
             println(" (normalized)")
         }
         printRatios()
+        return this
     }
 
     private fun printMartingalishKey() {
