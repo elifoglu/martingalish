@@ -3,8 +3,8 @@ package com.philocoder.martingalish.input
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.Some
-import com.philocoder.martingalish.DesiredBetResult
-import com.philocoder.martingalish.DesiredBetResult.GainMoney
+import com.philocoder.martingalish.bet.DesiredBetResult
+import com.philocoder.martingalish.bet.DesiredBetResult.GainMoney
 
 data class Inputs(val strategyInput: String,
                   val odd: Double,
@@ -40,9 +40,9 @@ data class Inputs(val strategyInput: String,
                 Some(readLine()!!.toDouble())
             } else None
 
-            print("Enter actual bankroll (0 to skip): ")
-            val actualBankroll = readLine()!!.toDouble().let {
-                if (it != 0.0) Some(it) else None
+            print("Enter actual bankroll (press enter to skip): ")
+            val actualBankroll = readLine()!!.let {
+                if (it.isNotEmpty()) Some(it.toDouble()) else None
             }
 
             return Inputs(

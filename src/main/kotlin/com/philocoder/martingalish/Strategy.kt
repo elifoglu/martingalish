@@ -1,13 +1,17 @@
 package com.philocoder.martingalish
 
 import arrow.core.getOrElse
-import com.philocoder.martingalish.DesiredBetResult.GainMoney
-import com.philocoder.martingalish.DesiredBetResult.LoseMoney
-import com.philocoder.martingalish.DesiredBetResult.BackToBankroll
+import com.philocoder.martingalish.bet.DesiredBetResult.GainMoney
+import com.philocoder.martingalish.bet.DesiredBetResult.LoseMoney
+import com.philocoder.martingalish.bet.DesiredBetResult.BackToBankroll
+import com.philocoder.martingalish.bet.BetStrategy
+import com.philocoder.martingalish.bet.DesiredBetResult
+import com.philocoder.martingalish.bet.GainMoneyStrategy
+import com.philocoder.martingalish.bet.LoseMoneyStrategy
 import com.philocoder.martingalish.input.Inputs
 import java.lang.RuntimeException
 
-data class Strategy(val sequence: List<DesiredBetResult>, val odd: Double) {
+data class Strategy(val sequence: List<BetStrategy>, val odd: Double) {
 
     companion object {
         fun build(inputs: Inputs): Strategy {
@@ -16,17 +20,17 @@ data class Strategy(val sequence: List<DesiredBetResult>, val odd: Double) {
             val earnings = listOf(earningOfFirstStake) + inputs.gainRatios.map { earningOfFirstStake * it }
             return Strategy(
                     sequence = inputs.strategyInput.toCharArray().map {
-                        when (it) {
-                            GainMoney.representation -> {
-                                val gainMoney = GainMoney(earnings[i])
+                        when (DesiredBetResult.fromRepresentation(it)) {
+                            GainMoney -> {
+                                val gainMoney = GainMoneyStrategy(
+                                        earning = earnings[i],
+                                        gainRatio = if (i == 0) 1.0 else inputs.gainRatios[i - 1]
+                                )
                                 i++
                                 gainMoney
                             }
-                            LoseMoney.representation -> {
-                                LoseMoney(inputs.bankrollReduceRatio.getOrElse { throw RuntimeException() })
-                            }
-                            BackToBankroll.representation -> BackToBankroll
-                            else -> throw RuntimeException()
+                            LoseMoney -> LoseMoneyStrategy(inputs.bankrollReduceRatio.getOrElse { throw RuntimeException() })
+                            BackToBankroll -> BackToBankroll
                         }
                     },
                     odd = inputs.odd)

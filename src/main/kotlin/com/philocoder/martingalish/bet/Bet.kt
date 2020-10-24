@@ -1,6 +1,6 @@
-package com.philocoder.martingalish
+package com.philocoder.martingalish.bet
 
-data class Bet(val desiredResult: DesiredBetResult,
+data class Bet(val betStrategy: BetStrategy,
                val stake: Double,
                val odd: Double,
                val totalSpentSinceThisBet: Double
