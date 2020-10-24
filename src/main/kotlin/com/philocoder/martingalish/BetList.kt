@@ -8,6 +8,7 @@ import com.philocoder.martingalish.bet.DesiredBetResult.*
 import com.philocoder.martingalish.bet.GainMoneyStrategy
 import com.philocoder.martingalish.bet.LoseMoneyStrategy
 import com.philocoder.martingalish.input.Inputs
+import com.philocoder.martingalish.util.round
 
 data class BetList(val list: List<Bet>) {
 
@@ -29,7 +30,7 @@ data class BetList(val list: List<Bet>) {
         print("${list[0].odd}-g")
         list.drop(n = 1).forEach {
             when (DesiredBetResult.fromRepresentation(it.betStrategy.representation)) {
-                GainMoney -> print("${(it.betStrategy as GainMoneyStrategy).gainRatio}${GainMoney.representation}")
+                GainMoney -> print("${(it.betStrategy as GainMoneyStrategy).gainRatio.round(3)}${GainMoney.representation}")
                 LoseMoney -> print(LoseMoney.representation)
                 BackToBankroll -> print(BackToBankroll.representation)
             }
@@ -41,10 +42,10 @@ data class BetList(val list: List<Bet>) {
     }
 
     private fun printStakeListWithBankroll() =
-            print("Stake list: ${list.map { it.stake }} - Bankroll: $bankroll")
+            print("Stake list: ${list.map { it.stake.round(3) }} - Bankroll: ${bankroll.round(3)}")
 
     private fun printRatios() =
-            list.forEach { println("Ratio for '${it.betStrategy.representation}': ${it.calculateEarningRatio(bankroll)}") }
+            list.forEach { println("Ratio for '${it.betStrategy.representation}': ${it.calculateEarningRatio(bankroll).round(3)}") }
 
     companion object {
         fun from(inputs: Inputs): BetList {
