@@ -36,7 +36,7 @@ class StrategyTest {
     }
 
     @Test
-    fun `test 3,0g1,0g1,0g1,0l`() {
+    fun `3,0g1,0g1,0g1,0l`() {
         //given
         val inputs = Inputs("gggl", 3.0, arrayListOf(1.0, 1.0), Some(0.5), None)
 
