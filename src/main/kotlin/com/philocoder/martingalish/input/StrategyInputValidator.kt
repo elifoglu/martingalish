@@ -12,7 +12,7 @@ object StrategyInputValidator {
 
     fun isValid(input: String): Boolean {
         if (input.toCharArray().any { !allValidChars.contains(it) }) {
-            println("Your strategy contains invalid chars. Valid chars are: $allValidChars")
+            println("Your strategy contains invalid chars. Valid chars are: ${allValidChars.joinToString(", ")}")
             return false
         }
         if (!input.startsWith(GainMoney.representation)) {
