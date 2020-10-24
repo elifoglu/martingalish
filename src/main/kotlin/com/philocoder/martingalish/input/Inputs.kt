@@ -9,7 +9,8 @@ import com.philocoder.martingalish.DesiredBetResult.GainMoney
 data class Inputs(val strategyInput: String,
                   val odd: Double,
                   val gainRatios: List<Double>,
-                  val bankrollReduceRatio: Option<Double>) {
+                  val bankrollReduceRatio: Option<Double>,
+                  val actualBankroll: Option<Double>) {
 
     companion object {
         fun receive(): Inputs {
@@ -39,11 +40,17 @@ data class Inputs(val strategyInput: String,
                 Some(readLine()!!.toDouble())
             } else None
 
+            print("Enter actual bankroll (0 to skip): ")
+            val actualBankroll = readLine()!!.toDouble().let {
+                if (it != 0.0) Some(it) else None
+            }
+
             return Inputs(
                     strategyInput = strategyInput,
                     odd = odd,
                     gainRatios = gainRatios,
-                    bankrollReduceRatio = bankrollReduceRatio)
+                    bankrollReduceRatio = bankrollReduceRatio,
+                    actualBankroll = actualBankroll)
         }
     }
 }
