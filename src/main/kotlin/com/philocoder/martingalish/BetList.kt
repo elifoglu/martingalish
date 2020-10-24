@@ -6,7 +6,6 @@ import com.philocoder.martingalish.bet.Bet
 import com.philocoder.martingalish.bet.BetResult.GainMoney
 import com.philocoder.martingalish.bet.BetResult.LoseMoney
 import com.philocoder.martingalish.bet.BetStrategy.*
-import com.philocoder.martingalish.input.Inputs
 import com.philocoder.martingalish.util.round
 
 data class BetList(val list: List<Bet>) {
