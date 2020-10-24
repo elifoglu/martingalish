@@ -48,8 +48,7 @@ data class BetList(val list: List<Bet>) {
             list.forEach { println("Ratio for '${it.betStrategy.betResult.representation}': ${it.calculateEarningRatio(bankroll).round(3)}") }
 
     companion object {
-        fun from(inputs: Inputs): BetList {
-            val strategy = Strategy.build(inputs)
+        fun of(strategy: MartingalishStrategy): BetList {
             val betList = arrayListOf<Bet>()
             for (betStrategy in strategy.sequence) {
                 val stake = betStrategy.stakeCalculatorFn(betList.map { it.stake }.sum(), strategy.odd)

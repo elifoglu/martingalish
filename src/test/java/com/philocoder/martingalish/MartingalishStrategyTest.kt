@@ -7,7 +7,7 @@ import com.philocoder.martingalish.test_util.ExpectedBetList
 import com.philocoder.martingalish.test_util.IsLike.isLike
 import org.junit.jupiter.api.Test
 
-class StrategyTest {
+class MartingalishStrategyTest {
 
     @Test
     fun `3,0-g1,0g1,0g1,0g`() {
@@ -15,7 +15,8 @@ class StrategyTest {
         val inputs = Inputs("gggg", 3.0, arrayListOf(1.0, 1.0, 1.0), None, None)
 
         //when
-        val betList = BetList.from(inputs).printInfo(inputs.actualBankroll)
+        val strategy = MartingalishStrategy.from(inputs)
+        val betList = BetList.of(strategy).printInfo(inputs.actualBankroll)
 
         //then
         betList isLike ExpectedBetList(bankroll = 8.125, stakeList = arrayListOf(1.0, 1.5, 2.25, 3.375))
@@ -27,7 +28,8 @@ class StrategyTest {
         val inputs = Inputs("gggb", 3.0, arrayListOf(1.0, 1.0), None, None)
 
         //when
-        val betList = BetList.from(inputs).printInfo(inputs.actualBankroll)
+        val strategy = MartingalishStrategy.from(inputs)
+        val betList = BetList.of(strategy).printInfo(inputs.actualBankroll)
 
         //then
         betList isLike ExpectedBetList(bankroll = 7.125, stakeList = arrayListOf(1.0, 1.5, 2.25, 2.375))
@@ -39,7 +41,8 @@ class StrategyTest {
         val inputs = Inputs("gggl", 3.0, arrayListOf(1.0, 1.0), Some(1.0), None)
 
         //when
-        val betList = BetList.from(inputs).printInfo(inputs.actualBankroll)
+        val strategy = MartingalishStrategy.from(inputs)
+        val betList = BetList.of(strategy).printInfo(inputs.actualBankroll)
 
         //then
         betList isLike ExpectedBetList(bankroll = 6.125, stakeList = arrayListOf(1.0, 1.5, 2.25, 1.375))

@@ -7,15 +7,15 @@ import com.philocoder.martingalish.bet.BetStrategy
 import com.philocoder.martingalish.bet.BetStrategy.*
 import com.philocoder.martingalish.input.Inputs
 
-data class Strategy(val sequence: List<BetStrategy>, val odd: Double) {
+data class MartingalishStrategy(val sequence: List<BetStrategy>, val odd: Double) {
 
     companion object {
-        fun build(inputs: Inputs): Strategy {
+        fun from(inputs: Inputs): MartingalishStrategy {
             var i = 0
             val earningOfFirstStake = inputs.odd - 1
             val earnings = listOf(earningOfFirstStake) + inputs.gainRatios.map { earningOfFirstStake * it }
             val loss = inputs.lossRatio.map { it * earningOfFirstStake }
-            return Strategy(
+            return MartingalishStrategy(
                     sequence = inputs.strategyInput.toCharArray().map {
                         when (BetResult.fromRepresentation(it)) {
                             GainMoney -> {
