@@ -3,8 +3,8 @@ package com.philocoder.martingalish.input
 import arrow.core.None
 import arrow.core.Option
 import arrow.core.Some
-import com.philocoder.martingalish.bet.DesiredBetResult
-import com.philocoder.martingalish.bet.DesiredBetResult.GainMoney
+import com.philocoder.martingalish.bet.BetResult.GainMoney
+import com.philocoder.martingalish.bet.BetResult.LoseMoney
 
 data class Inputs(val strategyInput: String,
                   val odd: Double,
@@ -38,7 +38,7 @@ data class Inputs(val strategyInput: String,
                         }
             }
 
-            val lossRatio = if (strategyInput.contains(DesiredBetResult.LoseMoney.representation)) {
+            val lossRatio = if (strategyInput.contains(LoseMoney.representation)) {
                 print("Enter loss ratio: ")
                 Some(readLine()!!.toDouble())
             } else None

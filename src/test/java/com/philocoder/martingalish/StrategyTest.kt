@@ -2,9 +2,9 @@ package com.philocoder.martingalish
 
 import arrow.core.None
 import arrow.core.Some
-import com.philocoder.martingalish.test_util.IsLike.isLike
 import com.philocoder.martingalish.input.Inputs
 import com.philocoder.martingalish.test_util.ExpectedBetList
+import com.philocoder.martingalish.test_util.IsLike.isLike
 import org.junit.jupiter.api.Test
 
 class StrategyTest {

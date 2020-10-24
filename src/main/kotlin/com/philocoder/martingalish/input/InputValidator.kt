@@ -1,6 +1,6 @@
 package com.philocoder.martingalish.input
 
-import com.philocoder.martingalish.bet.DesiredBetResult.*
+import com.philocoder.martingalish.bet.BetResult.*
 
 object InputValidator {
 

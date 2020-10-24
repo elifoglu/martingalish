@@ -1,15 +1,11 @@
 package com.philocoder.martingalish
 
 import arrow.core.getOrElse
-import com.philocoder.martingalish.bet.DesiredBetResult.GainMoney
-import com.philocoder.martingalish.bet.DesiredBetResult.LoseMoney
-import com.philocoder.martingalish.bet.DesiredBetResult.BackToBankroll
+import com.philocoder.martingalish.bet.BetResult
+import com.philocoder.martingalish.bet.BetResult.*
 import com.philocoder.martingalish.bet.BetStrategy
-import com.philocoder.martingalish.bet.DesiredBetResult
-import com.philocoder.martingalish.bet.GainMoneyStrategy
-import com.philocoder.martingalish.bet.LoseMoneyStrategy
+import com.philocoder.martingalish.bet.BetStrategy.*
 import com.philocoder.martingalish.input.Inputs
-import java.lang.RuntimeException
 
 data class Strategy(val sequence: List<BetStrategy>, val odd: Double) {
 
@@ -21,7 +17,7 @@ data class Strategy(val sequence: List<BetStrategy>, val odd: Double) {
             val loss = inputs.lossRatio.map { it * earningOfFirstStake }
             return Strategy(
                     sequence = inputs.strategyInput.toCharArray().map {
-                        when (DesiredBetResult.fromRepresentation(it)) {
+                        when (BetResult.fromRepresentation(it)) {
                             GainMoney -> {
                                 val gainMoney = GainMoneyStrategy(
                                         earning = earnings[i],
@@ -33,7 +29,7 @@ data class Strategy(val sequence: List<BetStrategy>, val odd: Double) {
                             LoseMoney -> LoseMoneyStrategy(
                                     loss.getOrElse { throw RuntimeException() },
                                     inputs.lossRatio.getOrElse { throw RuntimeException() })
-                            BackToBankroll -> BackToBankroll
+                            BackToBankroll -> BackToBankrollStrategy
                         }
                     },
                     odd = inputs.odd)

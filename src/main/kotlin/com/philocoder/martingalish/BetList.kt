@@ -3,10 +3,9 @@ package com.philocoder.martingalish
 import arrow.core.Option
 import arrow.core.getOrElse
 import com.philocoder.martingalish.bet.Bet
-import com.philocoder.martingalish.bet.DesiredBetResult
-import com.philocoder.martingalish.bet.DesiredBetResult.*
-import com.philocoder.martingalish.bet.GainMoneyStrategy
-import com.philocoder.martingalish.bet.LoseMoneyStrategy
+import com.philocoder.martingalish.bet.BetResult.GainMoney
+import com.philocoder.martingalish.bet.BetResult.LoseMoney
+import com.philocoder.martingalish.bet.BetStrategy.*
 import com.philocoder.martingalish.input.Inputs
 import com.philocoder.martingalish.util.round
 
@@ -30,10 +29,10 @@ data class BetList(val list: List<Bet>) {
         print("Martingalish key: ")
         print("${list[0].odd}-g")
         list.drop(n = 1).forEach {
-            when (DesiredBetResult.fromRepresentation(it.betStrategy.representation)) {
-                GainMoney -> print("${(it.betStrategy as GainMoneyStrategy).gainRatio.round(3)}${GainMoney.representation}")
-                LoseMoney -> print(LoseMoney.representation)
-                BackToBankroll -> print(BackToBankroll.representation)
+            when (it.betStrategy) {
+                is GainMoneyStrategy -> print("${it.betStrategy.gainRatio.round(3)}${GainMoney.representation}")
+                is LoseMoneyStrategy -> print(LoseMoney.representation)
+                is BackToBankrollStrategy -> print(BackToBankrollStrategy.betResult.representation)
             }
         }
         if (list.any { it.betStrategy is LoseMoneyStrategy }) {
@@ -46,7 +45,7 @@ data class BetList(val list: List<Bet>) {
             print("Stake list: ${list.map { it.stake.round(3) }} - Bankroll: ${bankroll.round(3)}")
 
     private fun printRatios() =
-            list.forEach { println("Ratio for '${it.betStrategy.representation}': ${it.calculateEarningRatio(bankroll).round(3)}") }
+            list.forEach { println("Ratio for '${it.betStrategy.betResult.representation}': ${it.calculateEarningRatio(bankroll).round(3)}") }
 
     companion object {
         fun from(inputs: Inputs): BetList {
