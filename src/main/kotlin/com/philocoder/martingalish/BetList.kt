@@ -1,6 +1,5 @@
 package com.philocoder.martingalish
 
-import arrow.core.None
 import arrow.core.Option
 import arrow.core.getOrElse
 import com.philocoder.martingalish.bet.Bet
