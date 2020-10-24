@@ -12,7 +12,7 @@ sealed class DesiredBetResult(val representation: Char, val stakeCalculatorFn: (
 
     data class LoseMoney(val bankrollReduceRatio: Double) : DesiredBetResult(
             representation = 'l',
-            stakeCalculatorFn = { totalSpentUntilNow, odd -> totalSpentUntilNow / (bankrollReduceRatio * odd - 1) }) {
+            stakeCalculatorFn = { totalSpentUntilNow, odd -> totalSpentUntilNow / (odd / bankrollReduceRatio - 1) }) {
         companion object {
             const val representation = 'l'
         }
