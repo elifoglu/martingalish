@@ -17,23 +17,23 @@ data class BetList(val list: List<Bet>) {
         }
     }
 
-    private fun printStakeListWithBankroll() {
-        print("""
-        |Stake list: ${list.map { it.stake }}
-        |Bankroll: $bankroll
-        |""".trimMargin())
-    }
+    private fun printStakeListWithBankroll() =
+            println("Stake list: ${list.map { it.stake }} - Bankroll: $bankroll")
 
-    private fun printRatios() {
-        list.forEach {println("Earning ratio: ${it.calculateEarningRatio(bankroll)}") } //todo: fix print
-    }
+    private fun printRatios() =
+            list.forEach { println("Ratio for '${it.desiredResult.representation}': ${it.calculateEarningRatio(bankroll)}") }
 
     companion object {
         fun from(strategy: Strategy): BetList {
             val betList = arrayListOf<Bet>()
             for (desiredBetResult in strategy.sequence) {
                 val stake = desiredBetResult.stakeCalculatorFn(betList.map { it.stake }.sum(), strategy.odd)
-                betList.add(Bet(stake, strategy.odd, betList.map { it.stake }.sum()))
+                betList.add(Bet(
+                        desiredResult = desiredBetResult,
+                        stake = stake,
+                        odd = strategy.odd,
+                        totalSpentSinceThisBet = betList.map { it.stake }.sum()
+                ))
             }
             return BetList(betList)
         }
