@@ -16,7 +16,7 @@ data class MartingalishStrategy(val sequence: List<BetStrategy>, val odd: Double
             val earnings = listOf(earningOfFirstStake) + inputs.gainRatios.map { earningOfFirstStake * it }
             val loss = inputs.lossRatio.map { it * earningOfFirstStake }
             return MartingalishStrategy(
-                    sequence = inputs.strategyInput.toCharArray().map {
+                    sequence = inputs.strategy.toCharArray().map {
                         when (BetResult.fromRepresentation(it)) {
                             GainMoney -> {
                                 val gainMoney = GainMoneyStrategy(
